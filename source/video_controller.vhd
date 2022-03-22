@@ -33,8 +33,12 @@ begin
                 vsync <= '1';
                 x <= 0;
                 y <= 0;
+                -- not sure whether i should set to blank or pink?
+                vga_g <= (others => '0');
+                vga_b <= (others => '0');
+                vga_r <= (others => '0');
             else
-                if x < x_active then
+                if x < x_active-1 then
                     x <= x + 1;
                     hsync <= '1';
                     vsync <= '1';
@@ -45,14 +49,14 @@ begin
                     vga_r <= pink_r;
                 else 
                     -- begin horizontal blanking process
-                    hsync <= '0'
+                    hsync <= '0';
                     if x < total_x-1 then
                         x <= x + 1;
 
                         -- output blank
-                        vga_g <= (other => '0');
-                        vga_b <= (other => '0');
-                        vga_r <= (other => '0');
+                        vga_g <= (others => '0');
+                        vga_b <= (others => '0');
+                        vga_r <= (others => '0');
                     else -- after this pt x will always = max_x
                         if y < y_active-1 then
                             -- go to the next line
@@ -60,12 +64,16 @@ begin
                             x <= 0;
                         else
                             -- begin vertical blanking process
-                            vsync <= '0'
+                            vsync <= '0';
                             if y < total_y-1 then
                                 y <= y + 1;
                             else
                                 x <= 0;
                                 y <= 0;
+                                -- should i do this? thoughts?
+                                vga_g <= pink_g;
+                                vga_b <= pink_b;
+                                vga_r <= pink_r;
                             end if;
                         end if;
                     end if;
