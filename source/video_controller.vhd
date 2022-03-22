@@ -19,6 +19,7 @@ architecture rtl of video_controller is
 
     signal x : integer range 0 to total_x := 0;
     signal y : integer range 0 to total_y := 0;
+    signal en : std_logic := '1';
     constant pink_g : std_logic_vector(3 downto 0) := x"9";
     constant pink_b : std_logic_vector(3 downto 0) := x"C";
     constant pink_r : std_logic_vector(3 downto 0) := x"F";
@@ -33,20 +34,21 @@ begin
                 vsync <= '1';
                 x <= 0;
                 y <= 0;
-                -- not sure whether i should set to blank or pink?
-                vga_g <= (others => '0');
-                vga_b <= (others => '0');
-                vga_r <= (others => '0');
+                en <= '1';
+                -- -- not sure whether i should set to blank or pink?
+                -- vga_g <= (others => '0');
+                -- vga_b <= (others => '0');
+                -- vga_r <= (others => '0');
             else
                 if x < x_active-1 then
                     x <= x + 1;
                     hsync <= '1';
                     vsync <= '1';
-
+                    -- en <= '1';
                     -- output colour
-                    vga_g <= pink_g;
-                    vga_b <= pink_b;
-                    vga_r <= pink_r;
+                    -- vga_g <= pink_g;
+                    -- vga_b <= pink_b;
+                    -- vga_r <= pink_r;
                 else 
                     -- begin horizontal blanking process
                     hsync <= '0';
@@ -54,12 +56,14 @@ begin
                         x <= x + 1;
 
                         -- output blank
-                        vga_g <= (others => '0');
-                        vga_b <= (others => '0');
-                        vga_r <= (others => '0');
+                        -- vga_g <= (others => '0');
+                        -- vga_b <= (others => '0');
+                        -- vga_r <= (others => '0');
+                        en <= '0';
                     else -- after this pt x will always = max_x
                         if y < y_active-1 then
                             -- go to the next line
+                            en <= '1';
                             y <= y + 1;
                             x <= 0;
                         else
@@ -68,12 +72,16 @@ begin
                             if y < total_y-1 then
                                 y <= y + 1;
                             else
+                                -- brings it back to beginning:
                                 x <= 0;
                                 y <= 0;
                                 -- should i do this? thoughts?
-                                vga_g <= pink_g;
-                                vga_b <= pink_b;
-                                vga_r <= pink_r;
+                                -- vga_g <= pink_g;
+                                -- vga_b <= pink_b;
+                                -- vga_r <= pink_r;
+                                en <= '1';   
+                                hsync <= '1';
+                                vsync <= '1';
                             end if;
                         end if;
                     end if;
@@ -81,5 +89,19 @@ begin
             end if;
         end if;
     end process;
+
+    RGB_PROC: process(en)
+    begin
+        if en = '1' then
+            vga_g <= pink_g;
+            vga_b <= pink_b;
+            vga_r <= pink_r;
+        else
+            vga_g <= (others => '0');
+            vga_b <= (others => '0');
+            vga_r <= (others => '0');
+        end if;
+    end process;
+
 
 end architecture;
