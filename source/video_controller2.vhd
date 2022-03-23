@@ -2,8 +2,9 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.Res_1080p_package.all;
+use work.test_rom_package.all;
 
-entity video_controller is
+entity video_controller2 is
     port (
         clk : in std_logic;
         rst : in std_logic;
@@ -13,16 +14,14 @@ entity video_controller is
         vga_b : out std_logic_vector(RGB_bits-1 downto 0);
         vga_r : out std_logic_vector(RGB_bits-1 downto 0)
     );
-end video_controller;
+end video_controller2;
 
-architecture rtl of video_controller is
+architecture rtl of video_controller2 is
 
     signal x : integer range 0 to total_x := 0;
     signal y : integer range 0 to total_y := 0;
     signal en : std_logic := '1';
-    constant pink_g : std_logic_vector(RGB_bits-1 downto 0) := x"9";
-    constant pink_b : std_logic_vector(RGB_bits-1 downto 0) := x"C";
-    constant pink_r : std_logic_vector(RGB_bits-1 downto 0) := x"F";
+    signal vga_rgb : std_logic_vector((RGB_bits*6)-1 downto 0);
 
 begin
 
@@ -77,12 +76,30 @@ begin
         end if;
     end process;
 
-    RGB_PROC: process(en)
+    RGB_PROC: process(en, x)
     begin
         if en = '1' then
-            vga_g <= pink_g;
-            vga_b <= pink_b;
-            vga_r <= pink_r;
+            if x < x_active/num_colours then
+                vga_rgb <= test_pattern_ROM(0);
+            elsif x < 2 * (x_active/num_colours) then
+                vga_rgb <= test_pattern_ROM(1);
+            elsif x < 3 * (x_active/num_colours) then
+                vga_rgb <= test_pattern_ROM(2);
+            elsif x < 4 * (x_active/num_colours) then
+                vga_rgb <= test_pattern_ROM(3);
+            elsif x < 5 * (x_active/num_colours) then
+                vga_rgb <= test_pattern_ROM(4);
+            elsif x < 6 * (x_active/num_colours) then
+                vga_rgb <= test_pattern_ROM(5);
+            elsif x < 7 * (x_active/num_colours) then
+                vga_rgb <= test_pattern_ROM(6);
+            else
+                vga_rgb <= test_pattern_ROM(7);
+            end if;
+
+            vga_r <= vga_rgb((RGB_bits*6)-1 downto (RGB_bits*5));
+            vga_g <= vga_rgb((RGB_bits*4)-1 downto (RGB_bits*3));
+            vga_b <= vga_rgb(RGB_bits-1 downto 0);
         else
             vga_g <= (others => '0');
             vga_b <= (others => '0');
