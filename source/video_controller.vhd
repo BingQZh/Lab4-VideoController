@@ -34,21 +34,24 @@ begin
                 vsync <= '1';
                 x <= 0;
                 y <= 0;
-                en <= '1';
+                en <= '0';
                 -- ^ not sure whether i should set to blank or pink?
             else
                 if x < x_active-1 then
                     x <= x + 1;
                     hsync <= '1';
-                    vsync <= '1';
-                    -- en <= '1';
+                    if en = '1' then
+                        vsync <= '1';
+                    end if;
+                    --vsync <= '1';
+                    --en <= '1';
                     -- output colour
                 else 
                     -- begin horizontal blanking process
-                    if x = (x_active + x_frontp) then
-                        hsync <= '0';
-                    elsif x = (x_active + x_frontp + x_sync) then
+                    if x > (x_active + x_frontp + x_sync)-2 then
                         hsync <= '1';
+                    elsif x > (x_active + x_frontp)-2 then
+                        hsync <= '0';
                     end if;
 
                     if x < total_x-1 then
@@ -65,14 +68,15 @@ begin
                         else
                             -- begin vertical blanking process
 
-                            if y = (y_active + y_frontp) then
-                                vsync <= '0';
-                            elsif y = (y_active + y_frontp + y_sync) then
+                            if  y > (y_active + y_frontp + y_sync)-2 then
                                 vsync <= '1';
+                            elsif y > (y_active + y_frontp)-2 then
+                                vsync <= '0';
                             end if;
 
                             if y < total_y-1 then
                                 y <= y + 1;
+                                x <= 0;
                             else
                                 -- brings it back to beginning:
                                 x <= 0;
@@ -90,7 +94,7 @@ begin
 
     RGB_PROC: process(en)
     begin
-        if en = '1' then
+        if en = '1' and rst = '0' then
             vga_g <= pink_g;
             vga_b <= pink_b;
             vga_r <= pink_r;
