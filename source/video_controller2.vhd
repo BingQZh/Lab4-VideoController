@@ -44,7 +44,12 @@ begin
                     -- output colour
                 else 
                     -- begin horizontal blanking process
-                    hsync <= '0';
+                    if x = (x_active + x_frontp) then
+                        hsync <= '0';
+                    elsif x = (x_active + x_frontp + x_sync) then
+                        hsync <= '1';
+                    end if;
+
                     if x < total_x-1 then
                         x <= x + 1;
 
@@ -58,7 +63,12 @@ begin
                             x <= 0;
                         else
                             -- begin vertical blanking process
-                            vsync <= '0';
+                            if y = (y_active + y_frontp) then
+                                vsync <= '0';
+                            elsif y = (y_active + y_frontp + y_sync) then
+                                vsync <= '1';
+                            end if;
+                            
                             if y < total_y-1 then
                                 y <= y + 1;
                             else
