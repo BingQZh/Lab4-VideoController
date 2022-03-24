@@ -1,0 +1,199 @@
+{
+  "design": {
+    "design_info": {
+      "boundary_crc": "0x40DCFBC45EE1A513",
+      "device": "xc7z020clg484-1",
+      "gen_directory": "../../../../lab4.gen/sources_1/bd/top",
+      "name": "top",
+      "rev_ctrl_bd_flag": "RevCtrlBdOff",
+      "synth_flow_mode": "Hierarchical",
+      "tool_version": "2020.2"
+    },
+    "design_tree": {
+      "util_vector_logic_0": "",
+      "clk_wiz_0": "",
+      "video_controller_0": ""
+    },
+    "ports": {
+      "hsync": {
+        "direction": "O"
+      },
+      "vsync": {
+        "direction": "O"
+      },
+      "vga_b": {
+        "direction": "O",
+        "left": "3",
+        "right": "0"
+      },
+      "vga_g": {
+        "direction": "O",
+        "left": "3",
+        "right": "0"
+      },
+      "vga_r": {
+        "direction": "O",
+        "left": "3",
+        "right": "0"
+      },
+      "sys_clock": {
+        "direction": "I"
+      },
+      "rst": {
+        "direction": "I"
+      }
+    },
+    "components": {
+      "util_vector_logic_0": {
+        "vlnv": "xilinx.com:ip:util_vector_logic:2.0",
+        "xci_name": "top_util_vector_logic_0_0",
+        "xci_path": "ip\\top_util_vector_logic_0_0\\top_util_vector_logic_0_0.xci",
+        "inst_hier_path": "util_vector_logic_0",
+        "parameters": {
+          "C_OPERATION": {
+            "value": "not"
+          },
+          "C_SIZE": {
+            "value": "1"
+          }
+        }
+      },
+      "clk_wiz_0": {
+        "vlnv": "xilinx.com:ip:clk_wiz:6.0",
+        "xci_name": "top_clk_wiz_0_0",
+        "xci_path": "ip\\top_clk_wiz_0_0\\top_clk_wiz_0_0.xci",
+        "inst_hier_path": "clk_wiz_0",
+        "parameters": {
+          "CLKOUT1_JITTER": {
+            "value": "217.614"
+          },
+          "CLKOUT1_PHASE_ERROR": {
+            "value": "245.344"
+          },
+          "CLKOUT1_REQUESTED_OUT_FREQ": {
+            "value": "148.5"
+          },
+          "MMCM_CLKFBOUT_MULT_F": {
+            "value": "37.125"
+          },
+          "MMCM_CLKOUT0_DIVIDE_F": {
+            "value": "6.250"
+          },
+          "MMCM_DIVCLK_DIVIDE": {
+            "value": "4"
+          }
+        }
+      },
+      "video_controller_0": {
+        "vlnv": "xilinx.com:module_ref:video_controller:1.0",
+        "xci_name": "top_video_controller_0_0",
+        "xci_path": "ip\\top_video_controller_0_0\\top_video_controller_0_0.xci",
+        "inst_hier_path": "video_controller_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "video_controller",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "clk": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_RESET": {
+                "value": "rst",
+                "value_src": "constant"
+              }
+            }
+          },
+          "rst": {
+            "type": "rst",
+            "direction": "I"
+          },
+          "hsync": {
+            "direction": "O"
+          },
+          "vsync": {
+            "direction": "O"
+          },
+          "vga_g": {
+            "direction": "O",
+            "left": "3",
+            "right": "0"
+          },
+          "vga_b": {
+            "direction": "O",
+            "left": "3",
+            "right": "0"
+          },
+          "vga_r": {
+            "direction": "O",
+            "left": "3",
+            "right": "0"
+          }
+        }
+      }
+    },
+    "nets": {
+      "video_controller_0_hsync": {
+        "ports": [
+          "video_controller_0/hsync",
+          "hsync"
+        ]
+      },
+      "video_controller_0_vsync": {
+        "ports": [
+          "video_controller_0/vsync",
+          "vsync"
+        ]
+      },
+      "video_controller_0_vga_g": {
+        "ports": [
+          "video_controller_0/vga_g",
+          "vga_g"
+        ]
+      },
+      "video_controller_0_vga_b": {
+        "ports": [
+          "video_controller_0/vga_b",
+          "vga_b"
+        ]
+      },
+      "video_controller_0_vga_r": {
+        "ports": [
+          "video_controller_0/vga_r",
+          "vga_r"
+        ]
+      },
+      "util_vector_logic_0_Res": {
+        "ports": [
+          "util_vector_logic_0/Res",
+          "video_controller_0/rst"
+        ]
+      },
+      "clk_wiz_0_locked": {
+        "ports": [
+          "clk_wiz_0/locked",
+          "util_vector_logic_0/Op1"
+        ]
+      },
+      "clk_wiz_0_clk_out1": {
+        "ports": [
+          "clk_wiz_0/clk_out1",
+          "video_controller_0/clk"
+        ]
+      },
+      "sys_clock_1": {
+        "ports": [
+          "sys_clock",
+          "clk_wiz_0/clk_in1"
+        ]
+      },
+      "rst_1": {
+        "ports": [
+          "rst",
+          "clk_wiz_0/reset"
+        ]
+      }
+    }
+  }
+}

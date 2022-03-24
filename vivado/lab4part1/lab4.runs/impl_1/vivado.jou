@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Tue Mar 22 17:13:16 2022
+# Process ID: 32008
+# Current directory: U:/ENSC462/lab2b/lab4/lab4.runs/impl_1
+# Command line: vivado.exe -log top_wrapper.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source top_wrapper.tcl -notrace
+# Log file: U:/ENSC462/lab2b/lab4/lab4.runs/impl_1/top_wrapper.vdi
+# Journal file: U:/ENSC462/lab2b/lab4/lab4.runs/impl_1\vivado.jou
+#-----------------------------------------------------------
+source top_wrapper.tcl -notrace
