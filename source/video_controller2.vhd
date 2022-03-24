@@ -39,20 +39,21 @@ begin
                 if x < x_active-1 then
                     x <= x + 1;
                     hsync <= '1';
-                    vsync <= '1';
-                    -- en <= '1';
+                    if en = '1' then
+                        vsync <= '1';
+                    end if;
+--                    en <= '1';
                     -- output colour
                 else 
                     -- begin horizontal blanking process
-                    if x = (x_active + x_frontp) then
+                    if x > (x_active + x_frontp) -2 then
                         hsync <= '0';
-                    elsif x = (x_active + x_frontp + x_sync) then
+                    elsif x > (x_active + x_frontp + x_sync) - 2 then
                         hsync <= '1';
                     end if;
 
                     if x < total_x-1 then
                         x <= x + 1;
-
                         -- output blank
                         en <= '0';
                     else -- after this pt x will always = max_x
@@ -63,14 +64,15 @@ begin
                             x <= 0;
                         else
                             -- begin vertical blanking process
-                            if y = (y_active + y_frontp) then
+                            if y > (y_active + y_frontp) - 2 then
                                 vsync <= '0';
-                            elsif y = (y_active + y_frontp + y_sync) then
+                            elsif y > (y_active + y_frontp + y_sync) -2 then
                                 vsync <= '1';
                             end if;
                             
                             if y < total_y-1 then
                                 y <= y + 1;
+                                x <= 0;
                             else
                                 -- brings it back to beginning:
                                 x <= 0;
@@ -88,7 +90,7 @@ begin
 
     RGB_PROC: process(en, x)
     begin
-        if en = '1' then
+        if en = '1' and rst = '0' then
             if x < x_active/num_colours then
                 vga_rgb <= test_pattern_ROM(0);
             elsif x < 2 * (x_active/num_colours) then
