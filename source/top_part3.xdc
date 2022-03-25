@@ -12,8 +12,8 @@ set_property IOSTANDARD LVCMOS33 [get_ports vga_g];
 set_property IOSTANDARD LVCMOS33 [get_ports vga_b];
 set_property IOSTANDARD LVCMOS33 [get_ports vga_r];
 
-set_property IOSTANDARD LVCMOS18 [get_ports left_shift_SW6];
-set_property IOSTANDARD LVCMOS18 [get_ports right_shift_SW7];
+set_property IOSTANDARD LVCMOS25 [get_ports left_shift_SW6];
+set_property IOSTANDARD LVCMOS25 [get_ports right_shift_SW7];
 
 set_property PACKAGE_PIN Y9 [get_ports sys_clock];  # "GCLK"
 
