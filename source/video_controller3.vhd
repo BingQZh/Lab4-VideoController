@@ -4,7 +4,7 @@ use ieee.numeric_std.all;
 use work.Res_1080p_package.all;
 use work.test_rom_package.all;
 
-entity video_controller2 is
+entity video_controller3 is
     port (
         clk : in std_logic;
         rst : in std_logic;
@@ -16,9 +16,9 @@ entity video_controller2 is
         vga_b : out std_logic_vector(RGB_bits-1 downto 0);
         vga_r : out std_logic_vector(RGB_bits-1 downto 0)
     );
-end video_controller2;
+end video_controller3;
 
-architecture rtl of video_controller2 is
+architecture rtl of video_controller3 is
 
     signal x : integer range 0 to total_x := 0;
     signal y : integer range 0 to total_y := 0;
@@ -84,7 +84,7 @@ begin
                             if y >= (y_active + y_frontp + y_sync) - 1 then
                                 vsync <= '1';
                             elsif y >= (y_active + y_frontp) - 1 then
-                                if SW6 = 0 and SW7 = 1 then
+                                if SW6 = '0' and SW7 = '1' then
                                     -- shift right
                                     if base_bits = 0 then
                                         base_bits <= x_active;
@@ -92,7 +92,7 @@ begin
                                         base_bits <= base_bits - 1;
                                     end if;
 
-                                elsif SW6 = 1 and SW7 = 0 then
+                                elsif SW6 = '1' and SW7 = '0' then
                                     -- shift left
                                     if base_bits = x_active then
                                         base_bits <= 0;
