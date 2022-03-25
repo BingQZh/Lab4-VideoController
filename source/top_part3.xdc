@@ -12,7 +12,9 @@ set_property IOSTANDARD LVCMOS33 [get_ports vga_g];
 set_property IOSTANDARD LVCMOS33 [get_ports vga_b];
 set_property IOSTANDARD LVCMOS33 [get_ports vga_r];
 
-set_property PACKAGE_PIN F22 [get_ports rst];  # "SW0"
+set_property IOSTANDARD LVCMOS18 [get_ports left_shift_SW6];
+set_property IOSTANDARD LVCMOS18 [get_ports right_shift_SW7];
+
 set_property PACKAGE_PIN Y9 [get_ports sys_clock];  # "GCLK"
 
 
@@ -33,3 +35,16 @@ set_property PACKAGE_PIN U20  [get_ports {vga_r[1]}];  # "VGA-R2"
 set_property PACKAGE_PIN V19  [get_ports {vga_r[2]}];  # "VGA-R3"
 set_property PACKAGE_PIN V18  [get_ports {vga_r[3]}];  # "VGA-R4"
 set_property PACKAGE_PIN Y19  [get_ports vsync];  # "VGA-VS"
+
+## ----------------------------------------------------------------------------
+## User DIP Switches - Bank 35
+## ---------------------------------------------------------------------------- 
+#set_property PACKAGE_PIN F22 [get_ports {SW0}];  # "SW0"
+#set_property PACKAGE_PIN G22 [get_ports {SW1}];  # "SW1"
+#set_property PACKAGE_PIN H22 [get_ports {SW2}];  # "SW2"
+#set_property PACKAGE_PIN F21 [get_ports {SW3}];  # "SW3"
+#set_property PACKAGE_PIN H19 [get_ports {SW4}];  # "SW4"
+#set_property PACKAGE_PIN H18 [get_ports {SW5}];  # "SW5"
+set_property PACKAGE_PIN F22 [get_ports rst];  # "SW0"
+set_property PACKAGE_PIN H17 [get_ports left_shift_SW6];  # "SW6"
+set_property PACKAGE_PIN M15 [get_ports right_shift_SW7];  # "SW7"
