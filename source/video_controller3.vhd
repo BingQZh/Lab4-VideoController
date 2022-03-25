@@ -47,7 +47,7 @@ begin
                 if x < x_active-1 then
                     x <= x + 1;
 
-                    if changed_bits = x_active then
+                    if changed_bits = x_active-1 then
                         changed_bits <= 0;
                     else
                         changed_bits <= changed_bits + 1;
@@ -79,6 +79,7 @@ begin
                             en <= '1';
                             y <= y + 1;
                             x <= 0;
+                            changed_bits <= base_bits;
                         else
                             -- begin vertical blanking process
 
@@ -95,14 +96,14 @@ begin
                                 if SW6 = '0' and SW7 = '1' then
                                     -- shift right
                                     if base_bits = 0 then
-                                        base_bits <= x_active;
+                                        base_bits <= x_active-1;
                                     else
                                         base_bits <= base_bits - 1;
                                     end if;
 
                                 elsif SW6 = '1' and SW7 = '0' then
                                     -- shift left
-                                    if base_bits = x_active then
+                                    if base_bits = x_active-1 then
                                         base_bits <= 0;
                                     else
                                         base_bits <= base_bits + 1;
