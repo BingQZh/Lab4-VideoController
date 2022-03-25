@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use work.Res_1080p_package.all;
 
 use std.textio.all;
 use std.env.finish;
@@ -10,6 +11,7 @@ end video_controller_tb;
 
 architecture sim of video_controller_tb is
 
+    -- freq for image processing
     constant clk_hz : integer := 1485e5;
     constant clk_period : time := 1 sec / clk_hz;
 
@@ -17,9 +19,9 @@ architecture sim of video_controller_tb is
     signal rst : std_logic := '1';
     signal hsync : std_logic;
     signal vsync : std_logic;
-    signal vga_g : std_logic_vector(3 downto 0);
-    signal vga_b : std_logic_vector(3 downto 0);
-    signal vga_r : std_logic_vector(3 downto 0);
+    signal vga_g : std_logic_vector(RGB_bits-1 downto 0);
+    signal vga_b : std_logic_vector(RGB_bits-1 downto 0);
+    signal vga_r : std_logic_vector(RGB_bits-1 downto 0);
 begin
 
     clk <= not clk after clk_period / 2;
@@ -37,11 +39,11 @@ begin
 
     VID_PROC : process
     begin
-        wait for clk_period * 5;
+        wait for clk_period * 100000;
 
         rst <= '0';
 
-        wait for clk_period * 10000000;
+        wait for clk_period * 5000000;
 
         finish;
     end process;
