@@ -84,8 +84,14 @@ begin
 
                             -- set vsync to only y sync region:
                             if y >= (y_active + y_frontp + y_sync) - 1 then
+                                -- this is back porch
                                 vsync <= '1';
                             elsif y >= (y_active + y_frontp) - 1 then
+                                -- this is y sync
+                                vsync <= '0';
+                             elsif y >= y_active - 1 then
+                                -- this is front porch
+                                -- shift bits here:
                                 if SW6 = '0' and SW7 = '1' then
                                     -- shift right
                                     if base_bits = 0 then
@@ -102,10 +108,9 @@ begin
                                         base_bits <= base_bits + 1;
                                     end if;
 
-                                    -- else stay same
+                                -- else stay same
                                 end if;
 
-                                vsync <= '0';
                             end if;
                             
                             if y < total_y-1 then
