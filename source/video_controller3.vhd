@@ -39,6 +39,8 @@ begin
                 vsync <= '1';
                 x <= 0;
                 y <= 0;
+                base_bits <= 0;
+                changed_bits <= 0;
                 en <= '1';
             else
                 -- start at active region (0,0)
@@ -46,9 +48,9 @@ begin
                     x <= x + 1;
 
                     if changed_bits = x_active then
-                        base_bits <= 0;
+                        changed_bits <= 0;
                     else
-                        base_bits <= base_bits + 1;
+                        changed_bits <= changed_bits + 1;
                     end if;
 
                     hsync <= '1';
@@ -99,6 +101,7 @@ begin
                                     else
                                         base_bits <= base_bits + 1;
                                     end if;
+
                                     -- else stay same
                                 end if;
 
